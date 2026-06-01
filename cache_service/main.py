@@ -54,13 +54,21 @@ def handle_query():
         send_metric("hit", zone_id, query_type, latency_ms, cache_key)
         return jsonify({"result": json.loads(cached), "source": "cache"})
 
-    resp   = requests.post(f"{RESPGEN_URL}/query", json=body, timeout=10)
-    result = resp.json()["result"]
-    r.setex(cache_key, TTL, json.dumps(result))
+    # Reintentar conexion al generador de respuestas
+    last_error = None
+    for attempt in range(3):
+        try:
+            resp   = requests.post(f"{RESPGEN_URL}/query", json=body, timeout=10)
+            result = resp.json()["result"]
+            r.setex(cache_key, TTL, json.dumps(result))
+            latency_ms = (time.time() - start) * 1000
+            send_metric("miss", zone_id, query_type, latency_ms, cache_key)
+            return jsonify({"result": result, "source": "miss"})
+        except Exception as e:
+            last_error = e
+            time.sleep(1)
 
-    latency_ms = (time.time() - start) * 1000
-    send_metric("miss", zone_id, query_type, latency_ms, cache_key)
-    return jsonify({"result": result, "source": "miss"})
+    return jsonify({"error": str(last_error)}), 500
 
 @app.route("/health")
 def health():

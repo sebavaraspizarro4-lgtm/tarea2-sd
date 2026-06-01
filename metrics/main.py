@@ -1,10 +1,13 @@
 import sqlite3
 import time
+import os
 import numpy as np
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
-DB_PATH = "/app/results/metrics.db"
+
+os.makedirs("/metrics", exist_ok=True)
+DB_PATH = "/metrics/metrics.db"
 
 def get_db():
     conn = sqlite3.connect(DB_PATH)

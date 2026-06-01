@@ -28,7 +28,7 @@ ZONE_AREA_KM2 = {zid: calc_area_km2(bbox) for zid, bbox in ZONES.items()}
 
 
 print("Cargando dataset en memoria...")
-df = pd.read_csv("/app/data/santiago_buildings.csv")
+df = pd.read_csv("/data/santiago_buildings.csv")
 DATA = {zid: df[df.zone_id == zid].to_dict("records") for zid in ZONES}
 print(f"Dataset cargado: {len(df):,} edificios")
 
