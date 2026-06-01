@@ -1,0 +1,7 @@
+data/*.csv
+data/*.gz
+venv/
+__pycache__/
+*.pyc
+metrics_data/
+results/
