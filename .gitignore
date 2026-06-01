@@ -5,3 +5,6 @@ __pycache__/
 *.pyc
 metrics_data/
 results/
+!results/*.json
+!results/*.png
+!results/*.py
