@@ -1,20 +1,20 @@
-# Tarea 2: Procesamiento y Fallback con Apache Kafka
+Tarea 2: Procesamiento y Fallback con Apache Kafka
 
-Curso: Sistemas Distribuidos 2026-1
+Sistemas Distribuidos 
 Profesor: Nicolás Hidalgo
 
-## Descripción
+Descripción
 
 Sistema distribuido de análisis de consultas geoespaciales sobre el dataset Google Open Buildings (Región Metropolitana de Santiago), incorporando Apache Kafka como sistema de mensajería asíncrona con mecanismos de fallback y reintentos.
 
-## Arquitectura
+Arquitectura
 
 Generador de Tráfico → Kafka → Consumidores → Caché (Redis) → Generador de Respuestas
                                      ↓ falla
                                Topic Reintento → DLQ
                                Métricas (SQLite)
 
-## Servicios
+Servicios
 
 - kafka (9092): Broker de mensajería
 - zookeeper (2181): Coordinador de Kafka
@@ -26,12 +26,12 @@ Generador de Tráfico → Kafka → Consumidores → Caché (Redis) → Generado
 - kafka_consumer: Consume y procesa consultas
 - retry_consumer: Maneja reintentos y DLQ
 
-## Requisitos
+Requisitos
 
 - Docker
 - docker-compose
 
-## Despliegue
+Despliegue
 
 Clonar el repositorio:
     git clone https://github.com/sebavaraspizarro4-lgtm/tarea2-sd.git
@@ -46,17 +46,17 @@ Con múltiples consumers:
 Con fallas simuladas (cambiar FAIL_RATE=0.3 en docker-compose.yml):
     docker-compose up --build
 
-## Consultar métricas
+Consultar métricas
 
     curl http://localhost:5002/summary
 
-## Tópicos Kafka
+Tópicos Kafka
 
 - queries: Consultas principales
 - queries_retry: Consultas que fallaron y se reintentan
 - queries_dlq: Dead Letter Queue (máx reintentos alcanzado)
 
-## Variables de entorno
+Variables de entorno
 
 - DISTRIBUTION (zipf/uniform): Distribución del generador de tráfico
 - NUM_QUERIES: Número de consultas a generar
@@ -64,7 +64,7 @@ Con fallas simuladas (cambiar FAIL_RATE=0.3 en docker-compose.yml):
 - MAX_RETRIES: Máximo de reintentos antes de enviar a DLQ
 - CACHE_TTL: Tiempo de vida en caché en segundos
 
-## Resultados
+Resultados
 
 Escenario Base (1 consumer):   Hit Rate 80.34% | p50 7.76ms  | p95 67.39ms
 Fallas 30%:                    Hit Rate 68.48% | p50 7.86ms  | p95 74.68ms
