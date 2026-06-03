@@ -10,7 +10,7 @@ Sistema distribuido de análisis de consultas geoespaciales sobre el dataset Goo
 Arquitectura
 
 Generador de Tráfico → Kafka → Consumidores → Caché (Redis) → Generador de Respuestas
-                                     ↓ falla
+                                     → falla
                                Topic Reintento → DLQ
                                Métricas (SQLite)
 
