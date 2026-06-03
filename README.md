@@ -67,6 +67,9 @@ Variables de entorno
 Resultados
 
 Escenario Base (1 consumer):   Hit Rate 80.34% | p50 7.76ms  | p95 67.39ms
+
 Fallas 30%:                    Hit Rate 68.48% | p50 7.86ms  | p95 74.68ms
+
 3 Consumers:                   Hit Rate 80.67% | p50 7.55ms  | p95 66.75ms
+
 Spike 3000 queries:            Hit Rate 92.37% | p50 7.02ms  | p95 14.89ms
